@@ -23,8 +23,16 @@ in your local intranet.
 2. Access to IIS
 
 ## Installation
+1. Clone or fork the entire code base onto your development machine (PC)
+2. Build and run from within Visual Studio to verify the home page loads
+3. To test or use the website without launching from Visual Studio directly:
+    1. From within Visual Studio, right click on the UrlShortenerWeb project in solution explorer and select Properties
+    2. In the left-hand nav options, click on Web
+    3. In the Servers section, from the drop-down, select "Local IIS" and in the textbox below for Choose Url, pick any Url you like.  We recommend "http://localhost/goto".
+    4. Save these changes, and rebuild
+    5. After these steps are completed, you can use the goto app by directly navigating to http://localhost/goto without having launch it from Visual Studio every time.
 
-## Installation
+## Usage
 
 ## Links
 
