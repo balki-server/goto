@@ -1,5 +1,4 @@
 # goto - World's best URL-shortener & bookmarking site
-======================================================
 
 The repository contains the ASP.NET MVC code base for building and deploying the goto solution 
 in your local intranet.
