@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "Url Shortener";
+}
+<style>
+    .container {
+        max-width: initial;
+    }
+
+    .add-url-form {
+        margin-top: 50px;
+        margin-bottom: 25px;
+        border: 1px solid lightgray;
+        padding-top: 15px;
+    }
+
+    input.ng-invalid-validate-short-keyword, input.ng-invalid-validate-short-keyword:hover {
+        border: 1px solid red;
+    }
+</style>
+<div id="container" style="max-width: 100%;" ng-controller="urlShortenerCtrl" ng-init="init()">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 add-url-form">
+            <form name="urlShortenForm" class="form-horizontal">
+                <div class="form-group">
+
+                    <label class="control-label col-sm-3" for="url">
+                        URL
+                    </label>
+                    <input type="text" id="url" ng-change="checkLongUrl()" class="form-control col-sm-3 k-input k-textbox" ng-required="true" ng-model="url" />
+                </div><div class="form-group">
+                    <label class="control-label col-sm-3" for="keyword">
+                        Keyword
+
+                    </label>
+                    <input type="text" id="keyword" name="keyword" class="col-sm-3 k-input k-textbox" ng-required="true" ng-keypress="($event.which || $event.keyCode) == 13 && !(urlShortenForm.$invalid || disableCreate) && createUpdateShortenedUrl()" validate-short-keyword maxlength="25" ng-required ng-model="keyword" />
+
+                    <span class="col-sm-4" ng-show="urlShortenForm.keyword.$error.validateShortKeyword">Keyword already exists</span>
+                </div>@*<div class="form-group">
+              <label class="control-label col-sm-3" for="keyword">
+                  Short URL
+
+              </label>
+
+              <a class="col-sm-3" ng-show="keyword.length>0">{{appConfigs.urlShortenerWebAPIURL + keyword}} </a>
+    </div>*@<div class="form-group">
+                    <div class="col-sm-offset-3">
+                        <button type="button" ng-disabled="urlShortenForm.$invalid || disableCreate" class="btn btn-default" ng-click="createUpdateShortenedUrl()">{{createButtonLabel}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <div kendo-grid="gridUrlShortener" k-options="gridOptions" id="div-url-shortener"></div>
+    </div>
+    <script type="text/x-kendo-template" id="gridEditUsersTemplate">
+        <div ng-controller="GridEditorCtrl" id="gridEditUsers" ng-init="init()">
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>
+                        First Name
+                        <input type="text" name="FirstName" class="k-input k-textbox" ng-model="dataItem.FirstName" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Last Name
+                        <input type="text" name="LastName" class="k-input k-textbox" ng-model="dataItem.LastName" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Email Address
+                        <input type="text" name="EmailAddress" class="k-input k-textbox" ng-model="dataItem.EmailAddress" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label ng-show="appUser.EmailAddress==appConfigs.adminEmailAddress">
+                        Admin
+                        <input type="checkbox" class="km-widget checkbox" id="IsAdmin" ng-model="dataItem.IsAdmin" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>
+                        Remaining Days
+                        <input name="RemainingFreeDays" kendo-numeric-text-box ng-model="dataItem.RemainingFreeDays" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Phone Number
+                        <input type="text" id="HotLinePhoneNumber" class="k-input k-textbox" format-phone-number ng-model="dataItem.HotLinePhoneNumber" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Additional Input
+                        <input type="text" name="formattedAdditionalInput" class="k-input k-textbox" ng-model="dataItem.formattedAdditionalInput" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Time Zone
+                        <input kendo-drop-down-list="ddlTimeZone" k-options="ddlTimeZoneOpts" name="TimeZoneName" class="k-input k-textbox" ng-model="dataItem.TimeZoneName" />
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <h4>Days to Call</h4>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>
+                        Everyday
+                        <input type="checkbox" class="km-icon km-widget km-check checkbox" id="RVAll" ng-model="dataItem.RVALL" ng-change="checkedAllChanged()" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Monday
+                        <input type="checkbox" class="km-icon km-widget km-check  checkbox" id="RVMO" ng-model="dataItem.RVMO" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Tuesday
+                        <input type="checkbox" class="km-icon km-widget km-check checkbox" id="RVTU" ng-model="dataItem.RVTU" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Wednesday
+                        <input type="checkbox" class="km-icon km-widget km-check  checkbox" id="RVWE" ng-model="dataItem.RVWE" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>
+                        Thrusday
+                        <input type="checkbox" class="km-icon km-widget km-check  checkbox" id="RVTH" ng-model="dataItem.RVTH" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Friday
+                        <input type="checkbox" class="km-icon km-widget km-check  checkbox" id="RVFR" ng-model="dataItem.RVFR" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Saturday
+                        <input type="checkbox" class="km-icon km-widget km-check  checkbox" id="RVSA" ng-model="dataItem.RVSA" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        Sunday
+                        <input type="checkbox" class="km-icon km-widget km-check checkbox" id="RVSU" ng-model="dataItem.RVSU" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>
+                        Call Time
+                        <input kendo-time-picker="dtCallTimePicker" onkeydown="return false;" onclick="$(this).getKendoTimePicker().open()" ng-click="dtCallTimePicker.open()" k-options="dtCallTimePickerOpts" class="k-input k-textbox" />
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <h4>Mobile Numbers</h4>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>
+                        <input type="button" value="Add another phone number" ng-click="mobileNumberAdded(null)" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        <input type="button" value="Resend Verification Codes" ng-click="resendVerificationCodes()" />
+                    </label>
+                </div><div class="col-xs-3">
+                    <label>
+                        <input type="button" value="Override Pending Verifications" ng-click="resendVerificationCodes()" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3" style="border-bottom:none;border-top:none;" ng-repeat="mobileNumber in dataItem.MobileNumbersForm track by $index">
+                    <label class="km-inline-field km-label-above" style="width:70%;">
+                        <input type="text" ng-model="mobileNumber.value" format-phone-number placeholder="Enter mobile number here" />
+                        <input type="button" ng-click="mobileNumberRemoved($index)" style="color:\#ff4350;" value="Remove">
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </script>
+
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/home/index")
+}
+
+@section footer{
+
+}

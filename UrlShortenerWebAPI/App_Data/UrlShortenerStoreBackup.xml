@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Url Shortener-->
+<ShortenedUrls>
+  <ShortenedUrl Id="1">
+    <ActualUrl>https://dailydialin.com/Users</ActualUrl>
+    <CreatedDate>2016-05-13T12:35:18.8517981+05:00</CreatedDate>
+    <HitCount>2</HitCount>
+    <LastHit>2016-05-13T16:23:45.8599785+05:00</LastHit>
+    <ShortKeyword>UserCheck</ShortKeyword>
+  </ShortenedUrl>
+  <ShortenedUrl Id="2">
+    <ActualUrl>fafdsa</ActualUrl>
+    <CreatedDate>2016-05-13T16:19:45.9052365+05:00</CreatedDate>
+    <HitCount>0</HitCount>
+    <LastHit />
+    <ShortKeyword>fdasfdsf</ShortKeyword>
+  </ShortenedUrl>
+</ShortenedUrls>
