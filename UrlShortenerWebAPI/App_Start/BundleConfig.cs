@@ -25,10 +25,13 @@ namespace UrlShortenerWebAPI
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.js")); // Bootstrap 4+ includes Popper.js
+            // Ensure jQuery is loaded before Kendo UI
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                        "~/Scripts/kendo/js/angular.min.js",                        
+                        // Kendo UI scripts
+                        "~/Scripts/kendo/js/angular.min.js",
                         "~/Scripts/kendo/customJSBundle/admin/kendo.custom.min-2016.1.112.js",
                         "~/Scripts/kendo/js/angular-cookies.min.js",
+                        // App scripts
                         "~/Scripts/app/app.js"
                       ));
             bundles.Add(new ScriptBundle("~/bundles/home/index").Include(
