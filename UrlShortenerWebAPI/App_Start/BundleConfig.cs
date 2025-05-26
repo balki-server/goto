@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Optimization;
 
 namespace UrlShortenerWebAPI
@@ -11,6 +11,10 @@ namespace UrlShortenerWebAPI
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            // Add Popper.js (required for Bootstrap 4+ tooltips, popovers, and dropdowns)
+            bundles.Add(new ScriptBundle("~/bundles/popper").Include(
+                      "~/Scripts/umd/popper.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -20,11 +24,9 @@ namespace UrlShortenerWebAPI
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/bootstrap.bundle.js")); // Bootstrap 4+ includes Popper.js
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                        "~/Scripts/jquery-1.10.2.min.js",
-                         "~/Scripts/kendo/js/angular.min.js",                        
+                        "~/Scripts/kendo/js/angular.min.js",                        
                         "~/Scripts/kendo/customJSBundle/admin/kendo.custom.min-2016.1.112.js",
                         "~/Scripts/kendo/js/angular-cookies.min.js",
                         "~/Scripts/app/app.js"
@@ -43,7 +45,9 @@ namespace UrlShortenerWebAPI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-reboot.css",
+                      "~/Content/bootstrap-grid.css"));
             bundles.Add(new StyleBundle("~/Content/kendo/styles/kendo-bootstrap-default").Include(
                     "~/Content/kendo/styles/kendo.common-bootstrap.min.css",
                     "~/Content/kendo/styles/kendo.default.min.css",
